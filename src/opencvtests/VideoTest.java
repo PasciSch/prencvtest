@@ -20,7 +20,7 @@ import org.opencv.core.*;
 import org.opencv.videoio.*;
 import org.opencv.imgproc.*;
 
-public class Opencvtests extends JPanel{
+public class VideoTest extends JPanel{
 
     BufferedImage image;
     static JFrame frame0;
@@ -28,7 +28,7 @@ public class Opencvtests extends JPanel{
     public static void main (String args[]) throws InterruptedException{
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
-        Opencvtests t = new Opencvtests();
+        VideoTest t = new VideoTest();
         VideoCapture camera = new VideoCapture(0);
         frame0 = new JFrame();
 
@@ -48,7 +48,8 @@ public class Opencvtests extends JPanel{
                     //Imgproc.morphologyEx(frame, closed, Imgproc.MORPH_CLOSE, kernel);
                     //Core.divide(frame, closed, closed, 1, CvType.CV_32F);
                     //Core.normalize(closed, frame, 0, 255, Core.NORM_MINMAX, CvType.CV_8U);
-                    Imgproc.threshold(frame, frame, 50, 255, Imgproc.THRESH_BINARY_INV);
+                    Imgproc.cvtColor(frame, frame, Imgproc.COLOR_BGR2GRAY);
+                    //Imgproc.threshold(frame, frame, 50, 255, Imgproc.THRESH_BINARY_INV);
                     //Imgproc.cvtColor(frame, frame, Imgproc.COLOR_BGR2GRAY);
                     
                     BufferedImage image = t.MatToBufferedImage(frame);
@@ -72,16 +73,16 @@ public class Opencvtests extends JPanel{
         g.drawImage(image, 0, 0, this);
     }
 
-    public Opencvtests() {
+    public VideoTest() {
     }
 
-    public Opencvtests(BufferedImage img) {
+    public VideoTest(BufferedImage img) {
         image = img;
     }   
 
     //Show image on window
     public void window(BufferedImage img, String text, int x, int y) {
-        frame0.getContentPane().add(new Opencvtests(img));
+        frame0.getContentPane().add(new VideoTest(img));
         frame0.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame0.setTitle(text);
         frame0.setSize(img.getWidth(), img.getHeight() + 30);
